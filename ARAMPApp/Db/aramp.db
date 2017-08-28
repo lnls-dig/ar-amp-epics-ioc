@@ -58,3 +58,15 @@ record(bo, "$(P)$(R)Power") {
   field(ONAM, "On")
   field(OUT, "@aramp.proto setOnOff $(PORT)")
 }
+
+######################################################################
+# Gain control
+
+record(ao, "$(P)$(R)Gain") {
+  field(DESC, "Gain Control [0-4095]")
+  field(DTYP, "stream")
+  field(DRVH, "4095")
+  field(DRVL, "0")
+  field(EGU, "steps")
+  field(OUT, "@aramp.proto setGain $(PORT)")
+}
