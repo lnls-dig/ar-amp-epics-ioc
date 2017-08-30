@@ -13,7 +13,7 @@ epicsEnvSet("STREAM_PROTOCOL_PATH", "$(TOP)/ARAMPApp/Db")
 dbLoadDatabase "dbd/ARAMP.dbd"
 ARAMP_registerRecordDeviceDriver pdbbase
 
-drvAsynIPPortConfigure("AMPPORT", "${DEVICE_IP}:4003",0,0,0)
+drvAsynIPPortConfigure("AMPPORT", "${DEVICE_IP}:${DEVICE_PORT}",0,0,0)
 
 ## Load record instances
 dbLoadRecords("${TOP}/ARAMPApp/Db/aramp.db", "P=${P}, R=${R}, PORT=AMPPORT")
