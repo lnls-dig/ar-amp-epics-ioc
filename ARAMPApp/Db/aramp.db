@@ -61,12 +61,13 @@ record(bo, "$(P)$(R)Power") {
 
 ######################################################################
 # Gain control
-
 record(ao, "$(P)$(R)Gain") {
-  field(DESC, "Gain Control [0-4095]")
+  field(DESC, "Gain Control [28-53.5 dB]")
   field(DTYP, "stream")
-  field(DRVH, "4095")
-  field(DRVL, "0")
-  field(EGU, "steps")
+  field(DRVH, "53.5")
+  field(DRVL, "28.0")
+  field(EGU, "dB")
+  field(AOFF, "28.0")
+  field(ASLO, "0.0062271")
   field(OUT, "@aramp.proto setGain $(PORT)")
 }
