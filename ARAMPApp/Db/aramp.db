@@ -39,8 +39,8 @@
 ######################################################################
 # Reset to default state
 
-record(bo, "$(P)$(R)Rst-Cmd") {
-  field(DESC, "Reset to default state")
+record(bo, "$(P)$(R)Rst-SP") {
+  field(DESC, "Reset any faults")
   field(DTYP, "stream")
   field(ZNAM, "0")
   field(ONAM, "1")
@@ -50,6 +50,7 @@ record(bo, "$(P)$(R)Rst-Cmd") {
 
 ######################################################################
 # Power status control (On/Off)
+######################################################################
 
 record(bo, "$(P)$(R)Pwr-SP") {
   field(DESC, "Power Control (On/Off)")
@@ -57,21 +58,40 @@ record(bo, "$(P)$(R)Pwr-SP") {
   field(ZNAM, "Off")
   field(ONAM, "On")
   field(OUT, "@aramp.proto setOnOff $(PORT)")
+  field(FLNK, "$(P)$(R)Pwr-RB")
+}
+
+record(bi, "$(P)$(R)Pwr-RB") {
+  field(DESC, "Power Control (On/Off)")
+  field(DTYP, "Soft Channel")
+  field(INP, "$(P)$(R)Pwr-SP.VAL")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
 }
 
 ######################################################################
 # Gain control
+######################################################################
+
 record(ao, "$(P)$(R)Gain-SP") {
-  field(DESC, "Gain Control [28-53.5 dB]")
+  field(DESC, "Gain Control [min 32dB]")
   field(DTYP, "Soft Channel")
-  #field(DRVH, "53.5")
-  #field(DRVL, "28.0")
+  field(EGU, "dB")
+  field(FLNK, "$(P)$(R)Gain-RB")
+}
+
+record(ai, "$(P)$(R)Gain-RB") {
+  field(DESC, "Gain Control [min 32dB]")
+  field(DTYP, "Soft Channel")
+  field(INP, "$(P)$(R)Gain-SP.VAL")
   field(EGU, "dB")
   field(FLNK, "$(P)$(R)iConvGainStep")
 }
 
 ######################################################################
 # Gain control
+######################################################################
+
 record(calc, "$(P)$(R)iConvGainStep") {
   field(DESC, "Convert Gain value to steps")
   field(INPA, "$(P)$(R)Gain-SP.VAL")
@@ -79,12 +99,15 @@ record(calc, "$(P)$(R)iConvGainStep") {
   field(INPC, "4299")
   field(INPD, "-60.799")
   field(INPE, "0.0496")
-  field(CALC, "FLOOR(B + (C - B)/(1+10^((D-A)*E)))")
+  field(INPF, "32") #Fixed gain
+  field(CALC, "FLOOR(B + (C - B)/(1+10^((D-(A-F))*E)))")
   field(FLNK, "$(P)$(R)GainStep-SP")
 }
 
 ######################################################################
 # Gain control
+######################################################################
+
 record(ao, "$(P)$(R)GainStep-SP") {
   field(DESC, "Gain Control in Steps [0-4095]")
   field(DTYP, "stream")
@@ -94,4 +117,12 @@ record(ao, "$(P)$(R)GainStep-SP") {
   field(DRVL, "0")
   field(EGU, "step")
   field(OUT, "@aramp.proto setGain $(PORT)")
+  field(FLNK, "$(P)$(R)GainStep-RB")
+}
+
+record(ai, "$(P)$(R)GainStep-RB") {
+  field(DESC, "Gain Control in Steps [0-4095]")
+  field(DTYP, "Soft Channel")
+  field(INP, "$(P)$(R)GainStep-SP.VAL")
+  field(EGU, "step")
 }
