@@ -18,9 +18,12 @@ ARAMP_DBD += base.dbd
 # Include dbd files from all support applications:
 ARAMP_DBD += stream.dbd
 ARAMP_DBD += drvAsynIPPort.dbd
+ARAMP_DBD += asSupport.dbd
 
 # Add all the support libraries needed by this IOC
-ARAMP_LIBS += stream asyn
+ARAMP_LIBS += stream
+ARAMP_LIBS += asyn
+ARAMP_LIBS += autosave
 
 # ARAMP_registerRecordDeviceDriver.cpp derives from ARAMP.dbd
 ARAMP_SRCS += ARAMP_registerRecordDeviceDriver.cpp

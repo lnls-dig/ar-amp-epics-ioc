@@ -32,3 +32,4 @@ EPICS_BASE=/opt/epics/base
 #RULES=/path/to/epics/support/module/rules/x-y
 ASYN=/opt/epics/synApps_5_8/support/asyn-4-26/
 STREAM=/opt/epics/synApps_5_8/support/stream-2-6a/
+AUTOSAVE=/opt/epics/synApps_5_8/support/autosave-5-6-1/
