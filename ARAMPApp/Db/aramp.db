@@ -39,7 +39,7 @@
 ######################################################################
 # Reset to default state
 
-record(bo, "$(P)$(R)Reset") {
+record(bo, "$(P)$(R)Rst-Cmd") {
   field(DESC, "Reset to default state")
   field(DTYP, "stream")
   field(ZNAM, "0")
@@ -51,7 +51,7 @@ record(bo, "$(P)$(R)Reset") {
 ######################################################################
 # Power status control (On/Off)
 
-record(bo, "$(P)$(R)Power") {
+record(bo, "$(P)$(R)Pwr-SP") {
   field(DESC, "Power Control (On/Off)")
   field(DTYP, "stream")
   field(ZNAM, "Off")
@@ -61,34 +61,33 @@ record(bo, "$(P)$(R)Power") {
 
 ######################################################################
 # Gain control
-record(ao, "$(P)$(R)Gain") {
+record(ao, "$(P)$(R)Gain-SP") {
   field(DESC, "Gain Control [28-53.5 dB]")
   field(DTYP, "Soft Channel")
   #field(DRVH, "53.5")
   #field(DRVL, "28.0")
   field(EGU, "dB")
-  field(FLNK, "$(P)$(R)ConvGain2Step")
+  field(FLNK, "$(P)$(R)iConvGainStep")
 }
 
 ######################################################################
 # Gain control
-record(calc, "$(P)$(R)ConvGain2Step") {
-  field(DESC, "Convert Gain value in steps")
-  field(EGU, "dB")
-  field(INPA, "$(P)$(R)Gain.VAL")
   field(CALC, "FLOOR(-4.433*(10^6) + (4299+4.433*(10^6))/(1+10^((-60.799-A)*0.0496)))")
-  field(FLNK, "$(P)$(R)GainStep")
+record(calc, "$(P)$(R)iConvGainStep") {
+  field(DESC, "Convert Gain value to steps")
+  field(INPA, "$(P)$(R)Gain-SP.VAL")
+  field(FLNK, "$(P)$(R)GainStep-SP")
 }
 
 ######################################################################
 # Gain control
-record(ao, "$(P)$(R)GainStep") {
+record(ao, "$(P)$(R)GainStep-SP") {
   field(DESC, "Gain Control in Steps [0-4095]")
   field(DTYP, "stream")
   field(OMSL, "closed_loop")
-  field(DOL, "$(P)$(R)ConvGain2Step.VAL PP")
+  field(DOL, "$(P)$(R)iConvGainStep.VAL PP")
   field(DRVH, "4095")
   field(DRVL, "0")
-  field(EGU, "steps")
+  field(EGU, "step")
   field(OUT, "@aramp.proto setGain $(PORT)")
 }
