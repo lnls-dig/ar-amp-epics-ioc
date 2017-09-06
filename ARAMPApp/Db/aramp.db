@@ -72,10 +72,14 @@ record(ao, "$(P)$(R)Gain-SP") {
 
 ######################################################################
 # Gain control
-  field(CALC, "FLOOR(-4.433*(10^6) + (4299+4.433*(10^6))/(1+10^((-60.799-A)*0.0496)))")
 record(calc, "$(P)$(R)iConvGainStep") {
   field(DESC, "Convert Gain value to steps")
   field(INPA, "$(P)$(R)Gain-SP.VAL")
+  field(INPB, "-4433000")
+  field(INPC, "4299")
+  field(INPD, "-60.799")
+  field(INPE, "0.0496")
+  field(CALC, "FLOOR(B + (C - B)/(1+10^((D-A)*E)))")
   field(FLNK, "$(P)$(R)GainStep-SP")
 }
 
