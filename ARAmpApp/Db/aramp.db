@@ -39,32 +39,41 @@
 ######################################################################
 # Reset to default state
 
-record(bo, "$(P)$(R)Rst-SP") {
+record(bo, "$(P)$(R)Rst-Cmd") {
   field(DESC, "Reset any faults")
   field(DTYP, "stream")
-  field(ZNAM, "0")
-  field(ONAM, "1")
-  field(HIGH, "1")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(HIGH, "0.5")
+  field(FLNK, "$(P)$(R)ValidRst")
+}
+
+record(calcout, "$(P)$(R)ValidRst"){
+  field(DESC, "Validate reset cmd")
+  field(INPA, "$(P)$(R)Rst-Cmd")
+  field(CALC, "A")
+  field(OOPT, "When Non-zero")
   field(OUT, "@aramp.proto reset $(PORT)")
 }
+
 
 ######################################################################
 # Power status control (On/Off)
 ######################################################################
 
-record(bo, "$(P)$(R)Pwr-SP") {
+record(bo, "$(P)$(R)Enbl-Sel") {
   field(DESC, "Power Control (On/Off)")
   field(DTYP, "stream")
   field(ZNAM, "Off")
   field(ONAM, "On")
   field(OUT, "@aramp.proto setOnOff $(PORT)")
-  field(FLNK, "$(P)$(R)Pwr-RB")
+  field(FLNK, "$(P)$(R)Enbl-Sts")
 }
 
-record(bi, "$(P)$(R)Pwr-RB") {
+record(bi, "$(P)$(R)Enbl-Sts") {
   field(DESC, "Power Control (On/Off)")
   field(DTYP, "Soft Channel")
-  field(INP, "$(P)$(R)Pwr-SP.VAL")
+  field(INP, "$(P)$(R)Enbl-Sel.VAL")
   field(ZNAM, "Off")
   field(ONAM, "On")
 }
