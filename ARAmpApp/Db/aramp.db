@@ -41,7 +41,7 @@
 
 record(bo, "$(P)$(R)Rst-Cmd") {
   field(DESC, "Reset any faults")
-  field(DTYP, "stream")
+  field(DTYP, "Soft Channel")
   field(ZNAM, "Off")
   field(ONAM, "On")
   field(HIGH, "0.5")
