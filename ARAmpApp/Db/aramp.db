@@ -131,7 +131,7 @@ record(ao, "$(P)$(R)GainStep-SP") {
 
 record(ai, "$(P)$(R)GainStep-RB") {
   field(DESC, "Gain Control in Steps [0-4095]")
-  field(DTYP, "Soft Channel")
-  field(INP, "$(P)$(R)GainStep-SP.VAL")
+  field(DTYP, "stream")
+  field(INP, "@aramp.proto getGain $(PORT)")
   field(EGU, "step")
 }
