@@ -8,35 +8,35 @@ include $(TOP)/configure/CONFIG
 #=============================
 # Build the IOC application
 
-PROD_IOC = ARAMP
-# ARAMP.dbd will be created and installed
-DBD += ARAMP.dbd
+PROD_IOC = ARAmp
+# ARAmp.dbd will be created and installed
+DBD += ARAmp.dbd
 
-# ARAMP.dbd will be made up from these files:
-ARAMP_DBD += base.dbd
+# ARAmp.dbd will be made up from these files:
+ARAmp_DBD += base.dbd
 
 # Include dbd files from all support applications:
-ARAMP_DBD += stream.dbd
-ARAMP_DBD += drvAsynIPPort.dbd
-ARAMP_DBD += asSupport.dbd
+ARAmp_DBD += stream.dbd
+ARAmp_DBD += drvAsynIPPort.dbd
+ARAmp_DBD += asSupport.dbd
 
 # Add all the support libraries needed by this IOC
-ARAMP_LIBS += stream
-ARAMP_LIBS += asyn
-ARAMP_LIBS += autosave
+ARAmp_LIBS += stream
+ARAmp_LIBS += asyn
+ARAmp_LIBS += autosave
 
-# ARAMP_registerRecordDeviceDriver.cpp derives from ARAMP.dbd
-ARAMP_SRCS += ARAMP_registerRecordDeviceDriver.cpp
+# ARAmp_registerRecordDeviceDriver.cpp derives from ARAmp.dbd
+ARAmp_SRCS += ARAmp_registerRecordDeviceDriver.cpp
 
 # Build the main IOC entry point on workstation OSs.
-ARAMP_SRCS_DEFAULT += ARAMPMain.cpp
-ARAMP_SRCS_vxWorks += -nil-
+ARAmp_SRCS_DEFAULT += ARAmpMain.cpp
+ARAmp_SRCS_vxWorks += -nil-
 
 # Add support from base/src/vxWorks if needed
-#ARAMP_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary
+#ARAmp_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary
 
 # Finally link to the EPICS Base libraries
-ARAMP_LIBS += $(EPICS_BASE_IOC_LIBS)
+ARAmp_LIBS += $(EPICS_BASE_IOC_LIBS)
 
 #===========================
 
