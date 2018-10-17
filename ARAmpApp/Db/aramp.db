@@ -37,6 +37,25 @@
 #---------------------------------------------------------------------
 
 ######################################################################
+# General Commands
+
+record(stringin, "$(P)$(R)Idn-Cte") {
+  field(DESC, "Get device identification")
+  field(SCAN, "Passive")
+  field(PINI, "YES")
+  field(DTYP, "stream")
+  field(INP, "@aramp.proto getIdn $(PORT)")
+}
+
+record(stringin, "$(P)$(R)IOB-Cte") {
+  field(DESC, "Get device IO Board ID")
+  field(SCAN, "Passive")
+  field(PINI, "YES")
+  field(DTYP, "stream")
+  field(INP, "@aramp.proto getIOB $(PORT)")
+}
+
+######################################################################
 # Reset to default state
 
 record(bo, "$(P)$(R)Rst-Cmd") {
