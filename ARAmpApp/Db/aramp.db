@@ -83,6 +83,7 @@ record(calcout, "$(P)$(R)ValidRst"){
 record(bo, "$(P)$(R)Enbl-Sel") {
   field(DESC, "Power Control (On/Off)")
   field(DTYP, "stream")
+  field(PINI, "YES")
   field(ZNAM, "Off")
   field(ONAM, "On")
   field(OUT, "@aramp.proto setOnOff $(PORT)")
@@ -105,6 +106,7 @@ record(ao, "$(P)$(R)Gain-SP") {
   field(DESC, "Gain Control [min 32dB]")
   field(DTYP, "Soft Channel")
   field(EGU, "dB")
+  field(PINI, "YES")
   field(FLNK, "$(P)$(R)ConvGainStep-Calc")
 }
 
