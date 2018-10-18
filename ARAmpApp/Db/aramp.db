@@ -154,3 +154,111 @@ record(ai, "$(P)$(R)GainStep-RB") {
   field(INP, "@aramp.proto getGain $(PORT)")
   field(EGU, "step")
 }
+
+######################################################################
+# State
+######################################################################
+
+record(bo, "$(P)$(R)State-Sel") {
+  field(DESC, "Ask Device State")
+  field(SCAN, "1 second")
+  field(PINI, "YES")
+  field(DTYP, "stream")
+  field(OUT, "@aramp.proto askState $(PORT)")
+}
+
+record(longin, "$(P)$(R)StateAll-Mon") {
+  field(DESC, "State All")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "stream")
+  field(INP, "@aramp.proto getStateAll $(PORT)")
+}
+
+record(longin, "$(P)$(R)State1-Mon") {
+  field(DESC, "State 1")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "stream")
+  field(INP, "@aramp.proto getState1 $(PORT)")
+  field(FLNK, "$(P)$(R)State1DFanout")
+}
+
+record(dfanout, "$(P)$(R)State1DFanout") {
+  field(DESC, "State 1 Data Fanout")
+  field(SCAN, "Passive")
+  field(DOL, "$(P)$(R)State1-Mon")
+  field(OMSL, "closed_loop")
+  field(SELM, "All")
+  field(OUTA, "$(P)$(R)RemoteCtrl-Mon.RVAL PP NMS")
+}
+
+record(mbbi, "$(P)$(R)RemoteCtrl-Mon") {
+  field(DESC, "Remote Control")
+  field(SCAN, "Passive")
+  field(DTYP, "Raw Soft Channel")
+  field(NOBT, "4")
+  field(MASK, "1")
+  field(SHFT, "3")
+  field(ZRVL, "0")
+  field(ONVL, "1")
+  field(ZRST, "Disabled")
+  field(ONST, "Enabled")
+}
+
+record(longin, "$(P)$(R)State2-Mon") {
+  field(DESC, "State 2")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "stream")
+  field(INP, "@aramp.proto getState2 $(PORT)")
+  field(FLNK, "$(P)$(R)State2DFanout")
+}
+
+record(dfanout, "$(P)$(R)State2DFanout") {
+  field(DESC, "State 2 Data Fanout")
+  field(SCAN, "Passive")
+  field(DOL, "$(P)$(R)State2-Mon")
+  field(OMSL, "closed_loop")
+  field(SELM, "All")
+  field(OUTA, "$(P)$(R)PowerStatus-Mon.RVAL PP NMS")
+  field(OUTB, "$(P)$(R)FaultStatus-Mon.RVAL PP NMS")
+}
+
+record(mbbi, "$(P)$(R)PowerStatus-Mon") {
+  field(DESC, "Power Status Control")
+  field(SCAN, "Passive")
+  field(DTYP, "Raw Soft Channel")
+  field(NOBT, "4")
+  field(MASK, "1")
+  field(SHFT, "0")
+  field(ZRVL, "0")
+  field(ONVL, "1")
+  field(ZRST, "Off")
+  field(ONST, "On")
+}
+
+record(mbbi, "$(P)$(R)FaultStatus-Mon") {
+  field(DESC, "Fault Status")
+  field(SCAN, "Passive")
+  field(DTYP, "Raw Soft Channel")
+  field(NOBT, "4")
+  field(MASK, "1")
+  field(SHFT, "3")
+  field(ZRVL, "0")
+  field(ONVL, "1")
+  field(ZRST, "Off")
+  field(ONST, "Fault")
+}
+
+record(longin, "$(P)$(R)State3-Mon") {
+  field(DESC, "State 3")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "stream")
+  field(INP, "@aramp.proto getState3 $(PORT)")
+}
+
+record(longin, "$(P)$(R)State4-Mon") {
+  field(DESC, "State 4")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "stream")
+  field(INP, "@aramp.proto getState4 $(PORT)")
+}
+

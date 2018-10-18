@@ -96,3 +96,32 @@ getGain {
 reset {
     out "R";
 }
+
+######################################################################
+#
+# State
+#
+askState {
+    out "STATE?";
+}
+
+getStateAll {
+    in "STATE= %4x";
+}
+
+getState1 {
+    in "STATE= %1x%*1x%*1x%*1x";
+}
+
+getState2 {
+    in "STATE= %*1x%1x%*1x%*1x";
+}
+
+getState3 {
+    in "STATE= %*1x%*1x%1x%*1x";
+}
+
+getState4 {
+    in "STATE= %1x%*1x%*1x%1x";
+}
+
