@@ -106,6 +106,7 @@ record(ao, "$(P)$(R)Gain-SP") {
   field(DESC, "Gain Control [min 32dB]")
   field(DTYP, "Soft Channel")
   field(EGU, "dB")
+  field(PREC, "2")
   field(PINI, "YES")
   field(FLNK, "$(P)$(R)ConvGainStep-Calc")
 }
@@ -114,6 +115,7 @@ record(ai, "$(P)$(R)Gain-RB") {
   field(DESC, "Gain Control [min 32dB]")
   field(DTYP, "Soft Channel")
   field(INP, "$(P)$(R)ConvGainDb-Calc.VAL")
+  field(PREC, "2")
   field(EGU, "dB")
 }
 
