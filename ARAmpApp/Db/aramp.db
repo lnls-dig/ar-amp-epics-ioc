@@ -262,3 +262,97 @@ record(longin, "$(P)$(R)State4-Mon") {
   field(INP, "@aramp.proto getState4 $(PORT)")
 }
 
+######################################################################
+# Faults
+######################################################################
+
+record(bo, "$(P)$(R)Faults-Sel") {
+  field(DESC, "Ask Device Faults")
+  field(SCAN, "1 second")
+  field(PINI, "YES")
+  field(DTYP, "stream")
+  field(OUT, "@aramp.proto askFaults $(PORT)")
+}
+
+record(longin, "$(P)$(R)Faults-Mon") {
+  field(DESC, "Faults")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "stream")
+  field(INP, "@aramp.proto getFaults $(PORT)")
+  field(FLNK, "$(P)$(R)FaultsDFanout")
+}
+
+record(dfanout, "$(P)$(R)FaultsDFanout") {
+  field(DESC, "Fault Data Fanout")
+  field(SCAN, "Passive")
+  field(DOL, "$(P)$(R)Faults-Mon")
+  field(OMSL, "closed_loop")
+  field(SELM, "All")
+  field(OUTA, "$(P)$(R)IlnkFault-Calc PP MMS")
+  field(OUTB, "$(P)$(R)ThermalFault-Calc PP MMS")
+  field(OUTC, "$(P)$(R)AmpFault-Calc PP MMS")
+}
+
+record(calcout, "$(P)$(R)IlnkFault-Calc"){
+  field(DESC, "Check if Interlock fault")
+  field(INPA, "$(P)$(R)FaultsDFanout NPP")
+  field(CALC, "A=1")
+  field(OOPT, "Everytime")
+  field(OUT, "$(P)$(R)IlnkFault-Mon.RVAL PP MSS")
+}
+
+record(mbbi, "$(P)$(R)IlnkFault-Mon") {
+  field(DESC, "Interlock Fault")
+  field(SCAN, "Passive")
+  field(DTYP, "Raw Soft Channel")
+  field(NOBT, "6")
+  field(MASK, "1")
+  field(SHFT, "0")
+  field(ZRVL, "0")
+  field(ONVL, "1")
+  field(ZRST, "No Fault")
+  field(ONST, "Fault")
+}
+
+record(calcout, "$(P)$(R)ThermalFault-Calc"){
+  field(DESC, "Check if Thermal fault")
+  field(INPA, "$(P)$(R)FaultsDFanout NPP")
+  field(CALC, "A=3")
+  field(OOPT, "Everytime")
+  field(OUT, "$(P)$(R)ThermalFault-Mon.RVAL PP MSS")
+}
+
+record(mbbi, "$(P)$(R)ThermalFault-Mon") {
+  field(DESC, "Thermal Fault")
+  field(SCAN, "Passive")
+  field(INP, "$(P)$(R)ThermalFault-Calc NPP MSS")
+  field(DTYP, "Raw Soft Channel")
+  field(NOBT, "6")
+  field(MASK, "1")
+  field(SHFT, "0")
+  field(ZRVL, "0")
+  field(ONVL, "1")
+  field(ZRST, "No Fault")
+  field(ONST, "Fault")
+}
+
+record(calcout, "$(P)$(R)AmpFault-Calc"){
+  field(DESC, "Check if Amp fault")
+  field(INPA, "$(P)$(R)FaultsDFanout NPP")
+  field(CALC, "A=5")
+  field(OOPT, "Everytime")
+  field(OUT, "$(P)$(R)AmpFault-Mon.RVAL PP MSS")
+}
+
+record(mbbi, "$(P)$(R)AmpFault-Mon") {
+  field(DESC, "Amp Fault")
+  field(SCAN, "Passive")
+  field(DTYP, "Raw Soft Channel")
+  field(NOBT, "6")
+  field(MASK, "1")
+  field(SHFT, "0")
+  field(ZRVL, "0")
+  field(ONVL, "1")
+  field(ZRST, "No Fault")
+  field(ONST, "Fault")
+}
