@@ -113,14 +113,14 @@ record(ai, "$(P)$(R)Gain-RB") {
   field(DTYP, "Soft Channel")
   field(INP, "$(P)$(R)Gain-SP.VAL")
   field(EGU, "dB")
-  field(FLNK, "$(P)$(R)iConvGainStep")
+  field(FLNK, "$(P)$(R)ConvGainStep-Calc")
 }
 
 ######################################################################
 # Gain control
 ######################################################################
 
-record(calc, "$(P)$(R)iConvGainStep") {
+record(calc, "$(P)$(R)ConvGainStep-Calc") {
   field(DESC, "Convert Gain value to steps")
   field(INPA, "$(P)$(R)Gain-SP.VAL")
   field(INPB, "-4433000")
