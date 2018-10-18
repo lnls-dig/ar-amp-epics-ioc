@@ -301,20 +301,20 @@ record(dfanout, "$(P)$(R)FaultsDFanout") {
   field(DOL, "$(P)$(R)Faults-Mon")
   field(OMSL, "closed_loop")
   field(SELM, "All")
-  field(OUTA, "$(P)$(R)IlnkFault-Calc PP MMS")
+  field(OUTA, "$(P)$(R)InlkFault-Calc PP MMS")
   field(OUTB, "$(P)$(R)ThermalFault-Calc PP MMS")
   field(OUTC, "$(P)$(R)AmpFault-Calc PP MMS")
 }
 
-record(calcout, "$(P)$(R)IlnkFault-Calc"){
+record(calcout, "$(P)$(R)InlkFault-Calc"){
   field(DESC, "Check if Interlock fault")
   field(INPA, "$(P)$(R)FaultsDFanout NPP")
   field(CALC, "A=1")
   field(OOPT, "Everytime")
-  field(OUT, "$(P)$(R)IlnkFault-Mon.RVAL PP MSS")
+  field(OUT, "$(P)$(R)InlkFault-Mon.RVAL PP MSS")
 }
 
-record(mbbi, "$(P)$(R)IlnkFault-Mon") {
+record(mbbi, "$(P)$(R)InlkFault-Mon") {
   field(DESC, "Interlock Fault")
   field(SCAN, "Passive")
   field(DTYP, "Raw Soft Channel")
