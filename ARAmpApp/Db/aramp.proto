@@ -43,6 +43,7 @@
 OutTerminator = LF;
 InTerminator = LF;
 ExtraInput = Ignore;
+replyTimeout = 2000;
 
 ######################################################################
 #
