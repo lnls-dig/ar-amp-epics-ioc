@@ -140,7 +140,7 @@ record(ao, "$(P)$(R)GainStep-SP") {
   field(DESC, "Gain Control in Steps [0-4095]")
   field(DTYP, "stream")
   field(OMSL, "closed_loop")
-  field(DOL, "$(P)$(R)iConvGainStep.VAL PP")
+  field(DOL, "$(P)$(R)ConvGainStep-Calc.VAL NPP MS")
   field(DRVH, "4095")
   field(DRVL, "0")
   field(EGU, "step")
