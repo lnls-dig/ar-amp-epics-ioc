@@ -105,15 +105,14 @@ record(ao, "$(P)$(R)Gain-SP") {
   field(DESC, "Gain Control [min 32dB]")
   field(DTYP, "Soft Channel")
   field(EGU, "dB")
-  field(FLNK, "$(P)$(R)Gain-RB")
+  field(FLNK, "$(P)$(R)ConvGainStep-Calc")
 }
 
 record(ai, "$(P)$(R)Gain-RB") {
   field(DESC, "Gain Control [min 32dB]")
   field(DTYP, "Soft Channel")
-  field(INP, "$(P)$(R)Gain-SP.VAL")
+  field(INP, "$(P)$(R)ConvGainDb-Calc.VAL")
   field(EGU, "dB")
-  field(FLNK, "$(P)$(R)ConvGainStep-Calc")
 }
 
 ######################################################################
@@ -130,6 +129,18 @@ record(calc, "$(P)$(R)ConvGainStep-Calc") {
   field(INPF, "32") #Fixed gain
   field(CALC, "FLOOR(B + (C - B)/(1+10^((D-(A-F))*E)))")
   field(FLNK, "$(P)$(R)GainStep-SP")
+}
+
+record(calc, "$(P)$(R)ConvGainDb-Calc") {
+  field(DESC, "Convert steps to Gain value")
+  field(INPA, "$(P)$(R)GainStep-RB.VAL")
+  field(INPB, "-4433000")
+  field(INPC, "4299")
+  field(INPD, "-60.799")
+  field(INPE, "0.0496")
+  field(INPF, "32") #Fixed gain
+  field(CALC, "FLOOR(B + (C - B)/(1+10^((D-(A-F))*E)))")
+  field(FLNK, "$(P)$(R)Gain-RB")
 }
 
 ######################################################################
@@ -151,8 +162,10 @@ record(ao, "$(P)$(R)GainStep-SP") {
 record(ai, "$(P)$(R)GainStep-RB") {
   field(DESC, "Gain Control in Steps [0-4095]")
   field(DTYP, "stream")
+  field(SCAN, "Passive")
   field(INP, "@aramp.proto getGain $(PORT)")
   field(EGU, "step")
+  field(FLNK, "$(P)$(R)ConvGainDb-Calc")
 }
 
 ######################################################################
