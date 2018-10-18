@@ -103,6 +103,7 @@ reset {
 # State
 #
 askState {
+    wait 500;
     out "STATE?";
 }
 
@@ -132,6 +133,7 @@ getState4 {
 #
 
 askFaults {
+    wait 500;
     out "FSTA?";
 }
 
