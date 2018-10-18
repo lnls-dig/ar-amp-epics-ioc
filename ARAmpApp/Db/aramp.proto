@@ -76,7 +76,7 @@ setOnOff {
 # Gain Control
 #
 setGain {
-    out "G%u";
+    out "G%04u";
 }
 
 getGain {
