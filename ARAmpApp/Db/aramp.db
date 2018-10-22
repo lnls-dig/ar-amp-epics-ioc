@@ -111,13 +111,6 @@ record(ao, "$(P)$(R)Gain-SP") {
   field(FLNK, "$(P)$(R)ConvGainStep-Calc")
 }
 
-record(ai, "$(P)$(R)Gain-RB") {
-  field(DESC, "Gain Control [min 32dB]")
-  field(DTYP, "Soft Channel")
-  field(PREC, "2")
-  field(EGU, "dB")
-}
-
 ######################################################################
 # Gain control
 ######################################################################
@@ -132,18 +125,6 @@ record(calcout, "$(P)$(R)ConvGainStep-Calc") {
   field(INPF, "32") #Fixed gain
   field(CALC, "FLOOR(B + (C - B)/(1+10^((D-(A-F))*E)))")
   field(OUT, "$(P)$(R)GainStep-SP PP NMS")
-}
-
-record(calcout, "$(P)$(R)ConvGainDb-Calc") {
-  field(DESC, "Convert steps to Gain value")
-  field(INPA, "$(P)$(R)GainStep-RB.VAL")
-  field(INPB, "-4433000")
-  field(INPC, "4299")
-  field(INPD, "-60.799")
-  field(INPE, "0.0496")
-  field(INPF, "32") #Fixed gain
-  field(CALC, "FLOOR(B + (C - B)/(1+10^((D-(A-F))*E)))")
-  field(OUT, "$(P)$(R)Gain-RB PP NMS")
 }
 
 ######################################################################
