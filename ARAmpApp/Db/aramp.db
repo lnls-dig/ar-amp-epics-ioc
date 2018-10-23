@@ -147,7 +147,6 @@ record(ai, "$(P)$(R)GainStep-RB") {
   field(SCAN, "Passive")
   field(INP, "@aramp.proto getGain $(PORT)")
   field(EGU, "step")
-  field(FLNK, "$(P)$(R)ConvGainDb-Calc")
 }
 
 ######################################################################
