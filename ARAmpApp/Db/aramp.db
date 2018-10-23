@@ -118,12 +118,12 @@ record(ao, "$(P)$(R)Gain-SP") {
 record(calcout, "$(P)$(R)ConvGainStep-Calc") {
   field(DESC, "Convert Gain value to steps")
   field(INPA, "$(P)$(R)Gain-SP.VAL")
-  field(INPB, "-4433000")
-  field(INPC, "4299")
-  field(INPD, "-60.799")
-  field(INPE, "0.0496")
-  field(INPF, "32") #Fixed gain
-  field(CALC, "FLOOR(B + (C - B)/(1+10^((D-(A-F))*E)))")
+  field(INPB, "-1.63234848e-10")
+  field(INPC, "2.33565731e-7")
+  field(INPD, "6.05993755e-3")
+  field(INPE, "3.05693437e1")
+  field(INPF, "30") #Fixed gain
+  field(CALC, "FLOOR(B*A^3 + C*A^2 + D*A + E -F)")
   field(OUT, "$(P)$(R)GainStep-SP PP NMS")
 }
 
