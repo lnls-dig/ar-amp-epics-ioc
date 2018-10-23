@@ -292,7 +292,7 @@ record(calcout, "$(P)$(R)InlkFault-Calc"){
   field(DESC, "Check if Interlock fault")
   field(INPA, "$(P)$(R)FaultsDFanout NPP")
   field(CALC, "A=1")
-  field(OOPT, "Everytime")
+  field(OOPT, "Every Time")
   field(OUT, "$(P)$(R)InlkFault-Mon.RVAL PP MSS")
 }
 
@@ -313,7 +313,7 @@ record(calcout, "$(P)$(R)ThermalFault-Calc"){
   field(DESC, "Check if Thermal fault")
   field(INPA, "$(P)$(R)FaultsDFanout NPP")
   field(CALC, "A=3")
-  field(OOPT, "Everytime")
+  field(OOPT, "Every Time")
   field(OUT, "$(P)$(R)ThermalFault-Mon.RVAL PP MSS")
 }
 
@@ -335,7 +335,7 @@ record(calcout, "$(P)$(R)AmpFault-Calc"){
   field(DESC, "Check if Amp fault")
   field(INPA, "$(P)$(R)FaultsDFanout NPP")
   field(CALC, "A=5")
-  field(OOPT, "Everytime")
+  field(OOPT, "Every Time")
   field(OUT, "$(P)$(R)AmpFault-Mon.RVAL PP MSS")
 }
 
