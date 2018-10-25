@@ -10,7 +10,9 @@ include $(TOP)/configure/CONFIG
 #----------------------------------------------------
 # Create and install (or just install) into <top>/db
 # databases, templates, substitutions like this
-DB += aramp.db
+DB += ARAmp50W1000DM2.db  
+DB += ARAmp75250AM2.db  
+DB += ARAmp75A400.db 
 
 #----------------------------------------------------
 # If <anyname>.db template is not named <anyname>*.template add
