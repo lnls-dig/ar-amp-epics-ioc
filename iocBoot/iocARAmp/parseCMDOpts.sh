@@ -15,7 +15,7 @@ usage () {
     echo "  -d                  Configure device type [50W1000DM2|75250AM2|75A400]" >&2
 }
 
-while getopts ":t:P:R:i:p:" opt; do
+while getopts ":t:P:R:i:p:d:" opt; do
   case $opt in
     t) DEVICE_TELNET_PORT="$OPTARG" ;;
     P) P="$OPTARG" ;;
