@@ -107,6 +107,8 @@ record(ao, "$(P)$(R)Gain-SP") {
   field(DTYP, "Soft Channel")
   field(EGU, "dB")
   field(PREC, "2")
+  field(DRVH, "100")
+  field(DRVL, "20")
   field(PINI, "YES")
   field(FLNK, "$(P)$(R)ConvGainStep-Calc")
 }
@@ -118,13 +120,15 @@ record(ao, "$(P)$(R)Gain-SP") {
 record(calcout, "$(P)$(R)ConvGainStep-Calc") {
   field(DESC, "Convert Gain value to steps")
   field(INPA, "$(P)$(R)Gain-SP.VAL")
-  field(INPB, "-1.63234848e-10")
-  field(INPC, "2.33565731e-7")
-  field(INPD, "6.05993755e-3")
-  field(INPE, "3.05693437e1")
-  field(INPF, "30") #Fixed gain
-  field(CALC, "FLOOR(B*A^3 + C*A^2 + D*A + E -F)")
-  field(OUT, "$(P)$(R)GainStep-SP PP NMS")
+  field(INPB, "-0.000000000163234848")
+#  field(INPB, "0.1")
+  field(INPC, "0.000000233565731")
+  field(INPD, "0.00605993755")
+  field(INPE, "30.5693437")
+  field(INPF, "3")
+  field(INPG, "2")
+  field(CALC, "B*A^F+C*A^G+D*A-E")
+#  field(OUT, "$(P)$(R)GainStep-SP PP NMS")
 }
 
 ######################################################################
