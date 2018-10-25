@@ -41,7 +41,7 @@
 
 record(bo, "$(P)$(R)Rst-Cmd") {
   field(DESC, "Reset any faults")
-  field(DTYP, "stream")
+  field(DTYP, "Soft Channel")
   field(ZNAM, "Off")
   field(ONAM, "On")
   field(HIGH, "0.5")
@@ -94,14 +94,14 @@ record(ai, "$(P)$(R)Gain-RB") {
   field(DTYP, "Soft Channel")
   field(INP, "$(P)$(R)Gain-SP.VAL")
   field(EGU, "dB")
-  field(FLNK, "$(P)$(R)iConvGainStep")
+  field(FLNK, "$(P)$(R)ConvGainStep-Calc")
 }
 
 ######################################################################
 # Gain control
 ######################################################################
 
-record(calc, "$(P)$(R)iConvGainStep") {
+record(calcout, "$(P)$(R)ConvGainStep-Calc") {
   field(DESC, "Convert Gain value to steps")
   field(INPA, "$(P)$(R)Gain-SP.VAL")
   field(INPB, "-4433000")
@@ -110,7 +110,7 @@ record(calc, "$(P)$(R)iConvGainStep") {
   field(INPE, "0.0496")
   field(INPF, "32") #Fixed gain
   field(CALC, "FLOOR(B + (C - B)/(1+10^((D-(A-F))*E)))")
-  field(FLNK, "$(P)$(R)GainStep-SP")
+  field(OUT, "$(P)$(R)GainStep-SP PP NMS")
 }
 
 ######################################################################
@@ -120,8 +120,6 @@ record(calc, "$(P)$(R)iConvGainStep") {
 record(ao, "$(P)$(R)GainStep-SP") {
   field(DESC, "Gain Control in Steps [0-4095]")
   field(DTYP, "stream")
-  field(OMSL, "closed_loop")
-  field(DOL, "$(P)$(R)iConvGainStep.VAL PP")
   field(DRVH, "4095")
   field(DRVL, "0")
   field(EGU, "step")
