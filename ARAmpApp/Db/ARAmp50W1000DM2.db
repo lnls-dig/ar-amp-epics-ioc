@@ -103,12 +103,12 @@ record(bi, "$(P)$(R)Enbl-Sts") {
 ######################################################################
 
 record(ao, "$(P)$(R)Gain-SP") {
-  field(DESC, "Gain Control [min 32dB]")
+  field(DESC, "Gain Control")
   field(DTYP, "Soft Channel")
   field(EGU, "dB")
   field(PREC, "2")
-  field(DRVH, "100")
-  field(DRVL, "20")
+  field(DRVL, "30.5")
+  field(DRVH, "48.5")
   field(PINI, "YES")
   field(FLNK, "$(P)$(R)ConvGainStep-Calc")
 }
@@ -120,15 +120,16 @@ record(ao, "$(P)$(R)Gain-SP") {
 record(calcout, "$(P)$(R)ConvGainStep-Calc") {
   field(DESC, "Convert Gain value to steps")
   field(INPA, "$(P)$(R)Gain-SP.VAL")
-  field(INPB, "-0.000000000163234848")
-#  field(INPB, "0.1")
-  field(INPC, "0.000000233565731")
-  field(INPD, "0.00605993755")
-  field(INPE, "30.5693437")
-  field(INPF, "3")
-  field(INPG, "2")
-  field(CALC, "B*A^F+C*A^G+D*A-E")
-#  field(OUT, "$(P)$(R)GainStep-SP PP NMS")
+  field(INPB, "0.074537732690588")
+  field(INPC, "-10.9494251459811")
+  field(INPD, "600.424888544919")
+  field(INPE, "-14399.1214030359")
+  field(INPF, "126791.552306024")
+  field(INPG, "4")
+  field(INPH, "3")
+  field(INPI, "2")
+  field(CALC, "FLOOR(B*A^G+C*A^H+D*A^I+E*A+F)")
+  field(OUT, "$(P)$(R)GainStep-SP PP NMS")
 }
 
 ######################################################################
