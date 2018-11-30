@@ -103,7 +103,7 @@ record(bi, "$(P)$(R)Enbl-Sts") {
 ######################################################################
 
 record(ao, "$(P)$(R)Gain-SP") {
-  field(DESC, "Gain Control [min 32dB]")
+  field(DESC, "Gain Control")
   field(DTYP, "Soft Channel")
   field(EGU, "dB")
   field(PREC, "2")
