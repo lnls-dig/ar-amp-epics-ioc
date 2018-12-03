@@ -103,7 +103,7 @@ record(bi, "$(P)$(R)Enbl-Sts") {
 ######################################################################
 
 record(ao, "$(P)$(R)Gain-SP") {
-  field(DESC, "Gain Control")
+  field(DESC, "Set Gain Control")
   field(DTYP, "Soft Channel")
   field(EGU, "dB")
   field(PREC, "2")
@@ -112,6 +112,25 @@ record(ao, "$(P)$(R)Gain-SP") {
   field(HIGH, "48.5")
   field(HSV,  "MINOR")
   field(PINI, "YES")
+}
+
+record(calc, "$(P)$(R)GainRB-Calc") {
+  field(DESC, "Get Gain calculation readback")
+  field(INPA, "$(P)$(R)GainStep-RB CPP MSS")
+  field(INPB, "-0.000000000163234848")
+  field(INPC, "0.000000233565731")
+  field(INPD, "0.00605993755")
+  field(INPE, "30.5693437")
+  field(INPF, "3")
+  field(INPG, "2")
+  field(CALC, "B*A^F+C*A^G+D*A+E")
+}
+
+record(ai, "$(P)$(R)Gain-RB") {
+  field(DESC, "Get Gain Control")
+  field(INP,  "$(P)$(R)GainRB-Calc CPP MSS")
+  field(EGU,  "dB")
+  field(PREC, "2")
 }
 
 ######################################################################
