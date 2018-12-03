@@ -113,7 +113,6 @@ record(ao, "$(P)$(R)Gain-SP") {
   field(HIGH, "48.5")
   field(HSV,  "MINOR")
   field(LSV,  "MINOR")
-  field(PREC, "2")
   field(PINI, "YES")
   field(FLNK, "$(P)$(R)ConvGainStep-Calc")
 }
