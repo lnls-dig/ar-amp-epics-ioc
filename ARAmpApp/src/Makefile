@@ -19,11 +19,13 @@ ARAmp_DBD += base.dbd
 ARAmp_DBD += stream.dbd
 ARAmp_DBD += drvAsynIPPort.dbd
 ARAmp_DBD += asSupport.dbd
+ARAmp_DBD += calcSupport.dbd
 
 # Add all the support libraries needed by this IOC
 ARAmp_LIBS += stream
 ARAmp_LIBS += asyn
 ARAmp_LIBS += autosave
+ARAmp_LIBS += calc
 
 # ARAmp_registerRecordDeviceDriver.cpp derives from ARAmp.dbd
 ARAmp_SRCS += ARAmp_registerRecordDeviceDriver.cpp
