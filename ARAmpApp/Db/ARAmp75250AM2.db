@@ -64,6 +64,7 @@ record(calcout, "$(P)$(R)ValidRst"){
 record(bo, "$(P)$(R)Enbl-Sel") {
   field(DESC, "Power Control (On/Off)")
   field(DTYP, "stream")
+  field(PINI, "YES")
   field(ZNAM, "Off")
   field(ONAM, "On")
   field(OUT, "@aramp.proto setOnOff $(PORT)")
@@ -83,34 +84,113 @@ record(bi, "$(P)$(R)Enbl-Sts") {
 ######################################################################
 
 record(ao, "$(P)$(R)Gain-SP") {
-  field(DESC, "Gain Control [min 32dB]")
+  field(DESC, "Set Gain Control")
   field(DTYP, "Soft Channel")
   field(EGU, "dB")
-  field(FLNK, "$(P)$(R)Gain-RB")
+  field(PREC, "2")
+  field(DRVL, "29.44")
+  field(DRVH, "53.0")
+  field(HIGH, "52.5")
+  field(HSV,  "MINOR")
+  field(PINI, "YES")
+}
+
+record(calc, "$(P)$(R)GainRB-Calc") {
+  field(DESC, "Get Gain calculation readback")
+  field(INPA, "$(P)$(R)GainStep-RB CPP MSS")
+  field(INPB, "0.000000000000182597049")
+  field(INPC, "-0.000000000983851177")
+  field(INPD, "0.00000232102849")
+  field(INPE, "0.000209635595")
+  field(INPF, "29.4397266")
+  field(INPG, "4")
+  field(INPH, "3")
+  field(INPI, "2")
+  field(CALC, "FLOOR(B*A^G+C*A^H+D*A^I+E*A+F)")
 }
 
 record(ai, "$(P)$(R)Gain-RB") {
-  field(DESC, "Gain Control [min 32dB]")
-  field(DTYP, "Soft Channel")
-  field(INP, "$(P)$(R)Gain-SP.VAL")
-  field(EGU, "dB")
-  field(FLNK, "$(P)$(R)ConvGainStep-Calc")
+  field(DESC, "Get Gain Control")
+  field(INP,  "$(P)$(R)GainRB-Calc CPP MSS")
+  field(EGU,  "dB")
+  field(PREC, "2")
 }
 
 ######################################################################
 # Gain control
 ######################################################################
 
-record(calcout, "$(P)$(R)ConvGainStep-Calc") {
-  field(DESC, "Convert Gain value to steps")
-  field(INPA, "$(P)$(R)Gain-SP.VAL")
-  field(INPB, "-4433000")
-  field(INPC, "4299")
-  field(INPD, "-60.799")
-  field(INPE, "0.0496")
-  field(INPF, "32") #Fixed gain
-  field(CALC, "FLOOR(B + (C - B)/(1+10^((D-(A-F))*E)))")
-  field(OUT, "$(P)$(R)GainStep-SP PP NMS")
+record(bo, "$(P)$(R)GainAuto-Sel"){
+  field(DESC, "Enable automatic gain")
+  field(PINI, "YES")
+  field(ZNAM, "0")
+  field(ONAM, "1")
+  field(FLNK, "$(P)$(R)GainAuto-Sts")
+}
+
+record(bi, "$(P)$(R)GainAuto-Sts"){
+  field(DESC, "Get automatic gain status")
+  field(INP,  "$(P)$(R)GainAuto-Sel")
+  field(ZNAM, "0")
+  field(ONAM, "1")
+}
+
+# For use with seq record below
+# 5=(STR1 and STR3) or 10=(STR2 and STR4)
+record(calc, "$(P)$(R)GainAutoIdxCalc"){
+    field(DESC, "Get gain auto propagation index")
+    field(SCAN, "Passive")
+    field(INPA, "$(P)$(R)GainAuto-Sts.VAL CPP NMS")
+    field(CALC, "A=0?5:10")
+}
+
+record(sseq, "$(P)$(R)GainAutoPropSseq"){
+    field(DESC, "get all types of ao OMSL")
+    field(PINI, "YES")
+    field(STR1, "supervisory")
+    field(STR2, "closed_loop")
+    field(STR3, "0")
+    field(STR4, "$(P)$(R)GToStep-Calc CPP MSS")
+    field(LNK1, "$(P)$(R)GainStep-SP.OMSL NPP NMS")
+    field(LNK2, "$(P)$(R)GainStep-SP.OMSL NPP NMS")
+    field(LNK3, "$(P)$(R)GainStep-SP.DOL CA NMS")
+    field(LNK4, "$(P)$(R)GainStep-SP.DOL CA NMS")
+    field(SELL, "$(P)$(R)GainAutoIdxCalc CPP MS")
+    field(SELM, "Mask")
+    field(SELN, "1")
+    field(FLNK, "$(P)$(R)GainAutoFilter-SP")
+}
+
+# Checks if we need to Process Gain after setting
+# GainAuto to 1. This synchornizes the "Span" value
+# to the Gain even if the "Span" value didn't
+# change
+record(calcout, "$(P)$(R)GainAutoFilter-SP"){
+    field(DESC, "Set FLNK to records")
+    field(INPA, "$(P)$(R)GainAuto-Sts NPP NMS")
+    field(CALC, "A>0")
+    field(OOPT, "When Non-zero")
+    field(OUT, "$(P)$(R)GainAutoFout.PROC PP")
+}
+
+record(fanout, "$(P)$(R)GainAutoFout"){
+    field(DESC, "Fanout center freq auto FLNK")
+    field(SELM, "All")
+    field(LNK1, "$(P)$(R)Gain-SP")
+}
+
+record(calc, "$(P)$(R)GToStep-Calc") {
+  field(DESC, "Convert Gain value from dB to steps")
+  field(INPA, "$(P)$(R)Gain-SP.VAL CPP MSS")
+  field(INPB, "-0.0212371358")
+  field(INPC, "3.89925933")
+  field(INPD, "-270.936726")
+  field(INPE, "8520.16418")
+  field(INPF, "-99396.0936")
+  field(INPG, "4")
+  field(INPH, "3")
+  field(INPI, "2")
+  field(CALC, "FLOOR(B*A^G+C*A^H+D*A^I+E*A+F)")
 }
 
 ######################################################################
@@ -120,8 +200,12 @@ record(calcout, "$(P)$(R)ConvGainStep-Calc") {
 record(ao, "$(P)$(R)GainStep-SP") {
   field(DESC, "Gain Control in Steps [0-4095]")
   field(DTYP, "stream")
+  field(DOL,  "$(P)$(R)GToStep-Calc CPP MSS")
+  field(OMSL, "closed_loop")
   field(DRVH, "4095")
   field(DRVL, "0")
+  field(HIGH, "4085")
+  field(HSV,  "MINOR")
   field(EGU, "step")
   field(OUT, "@aramp.proto setGain $(PORT)")
   field(FLNK, "$(P)$(R)GainStep-RB")
@@ -129,8 +213,10 @@ record(ao, "$(P)$(R)GainStep-SP") {
 
 record(ai, "$(P)$(R)GainStep-RB") {
   field(DESC, "Gain Control in Steps [0-4095]")
-  field(DTYP, "Soft Channel")
-  field(INP, "$(P)$(R)GainStep-SP.VAL")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(HIGH, "4085")
+  field(HSV,  "MINOR")
+  field(INP, "@aramp.proto getGain $(PORT)")
   field(EGU, "step")
 }
-
