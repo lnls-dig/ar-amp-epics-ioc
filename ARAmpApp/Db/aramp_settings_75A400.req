@@ -1,7 +1,10 @@
 # This file specifies which PVs of the corresponding database should be saved.
 
-# Enable
-$(P)$(R)Enbl-Sel
-
 # Gain
 $(P)$(R)Gain-SP
+
+# Lock Gain dB with Gain in steps
+$(P)$(R)GainAuto-Sel
+
+# Enable
+$(P)$(R)Enbl-Sel
