@@ -6,9 +6,9 @@ set +u
 # Parse command-line options
 . ./parseCMDOpts.sh "$@"
 
-# Use defaults if not set
+UNIX_SOCKET=""
 if [ -z "${DEVICE_TELNET_PORT}" ]; then
-   DEVICE_TELNET_PORT="20000"
+    UNIX_SOCKET="true"
 fi
 
 if [ -z "${ARAMP_INSTANCE}" ]; then
@@ -18,4 +18,18 @@ fi
 set -u
 
 # Run run*.sh scripts with procServ
-/usr/local/bin/procServ -f -n ${ARAMP_INSTANCE} -i ^C^D ${DEVICE_TELNET_PORT} ./runARAmp.sh "$@"
+if [ "${UNIX_SOCKET}" ]; then
+    /usr/local/bin/procServ \
+        --foreground \
+        --name ${ARAMP_INSTANCE} \
+        --ignore ^C^D \
+        unix:./procserv.sock \
+            ./runARAmp.sh "$@"
+else
+    /usr/local/bin/procServ \
+        --foreground \
+        --name ${ARAMP_INSTANCE} \
+        --ignore ^C^D \
+        ${DEVICE_TELNET_PORT} \
+            ./runARAmp.sh "$@"
+fi
