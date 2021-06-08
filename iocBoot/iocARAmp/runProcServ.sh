@@ -20,6 +20,7 @@ set -u
 # Run run*.sh scripts with procServ
 if [ "${UNIX_SOCKET}" ]; then
     /usr/local/bin/procServ \
+        --logfile - \
         --foreground \
         --name ${ARAMP_INSTANCE} \
         --ignore ^C^D \
@@ -27,6 +28,7 @@ if [ "${UNIX_SOCKET}" ]; then
             ./runARAmp.sh "$@"
 else
     /usr/local/bin/procServ \
+        --logfile - \
         --foreground \
         --name ${ARAMP_INSTANCE} \
         --ignore ^C^D \
